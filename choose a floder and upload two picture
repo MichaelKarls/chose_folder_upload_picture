@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
+
+namespace WindowsFormsApplication19
+{
+    public partial class Form1 : Form
+    {
+        
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int i = 0;
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                //DialogResult dia = this.folderBrowserDialog1.ShowDialog();
+                dialog.Description = "Please chose a picture which you like!";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.textBox1.Text = "Test is pass";
+                    DirectoryInfo info = new DirectoryInfo(dialog.SelectedPath);
+                    FileInfo[] wenjianjia = info.GetFiles();
+                    foreach(FileInfo inf in wenjianjia)
+                    {
+                        
+                        if (i ==1)
+                        {
+                            this.textBox1.Text += "-----------" + inf;
+                            pictureBox2.Image = System.Drawing.Image.FromFile(@"E:\截圖\" + inf.ToString());//this is full path,include picture's name 
+                            break;
+                        }
+                        if (i == 0)
+                        {
+                            this.textBox1.Text += "-----------" + inf;
+                            pictureBox1.Image = System.Drawing.Image.FromFile(@"E:\截圖\" + inf.ToString());
+                            i++;
+                        }
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                this.textBox1.Text = ex.ToString();//textBox for displaying incorrect information
+                
+            }
+            finally
+            { 
+                
+            }
+        }
+    }
+}
